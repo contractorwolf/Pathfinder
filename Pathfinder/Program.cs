@@ -19,7 +19,7 @@ namespace Pathfinder
     {
 
         static string gpsLogLine = "";
-        static int logInterval = 10;
+        static int logInterval = 50;
         static float heading;
 
         static PathwayItem[] Pathway = new PathwayItem[2];
@@ -36,7 +36,7 @@ namespace Pathfinder
         static USBLog log = new USBLog();
         static GPSFormatConverter gpsconverter = new GPSFormatConverter();
 
-        static MicroTimer timer = new MicroTimer();
+        //static MicroTimer timer = new MicroTimer();
 
 
         static double currentX;
@@ -112,7 +112,7 @@ namespace Pathfinder
 
             Thread.Sleep(1000);
 
-            timer.StartTimer();
+           // timer.StartTimer();
             //wait for initial gps position
             while (!FEZ_Extensions.GPS.GetPosition())
             {
@@ -127,8 +127,8 @@ namespace Pathfinder
                 Thread.Sleep(1000);
             }
 
-            timer.StopTimer();
-            Debug.Print("startgps time: " + timer.GetMilliseconds().ToString()); 
+           // timer.StopTimer();
+           // Debug.Print("startgps time: " + timer.GetMilliseconds().ToString()); 
 
             //get initial
             currentX = gpsconverter.Convert(FEZ_Extensions.GPS.GetLongitude());
@@ -140,7 +140,7 @@ namespace Pathfinder
 
             while (true)
             {
-                timer.StartTimer();
+               // timer.StartTimer();
 
 
                 if (FEZ_Extensions.GPS.GetPosition())
@@ -186,9 +186,12 @@ namespace Pathfinder
                             + heading + "," 
                             + turn_angle.CurrentServoAngle + ","  
                             + currentDistance.ToString().Substring(0, 6);
-           
 
-                Debug.Print(FEZ_Extensions.GPS.GetTime() + " " + gpsLogLine);
+                if (iterationIndex % 5 == 0)
+                {
+                    Debug.Print(FEZ_Extensions.GPS.GetTime() + " " + gpsLogLine);
+                }
+
 
 
                 if (iterationIndex % logInterval == 0)
@@ -241,10 +244,10 @@ namespace Pathfinder
 
                 //REMOVE AFTER ALL ISSUES ARE SOLVED
                 //allows for easier deploying of test code
-                Thread.Sleep(200);
+                Thread.Sleep(20);
 
-                timer.StopTimer();
-                Debug.Print("loop time: " + timer.GetMilliseconds().ToString()); 
+                //timer.StopTimer();
+                //Debug.Print("loop time: " + timer.GetMilliseconds().ToString()); 
                 iterationIndex++;
 
 
