@@ -3,99 +3,111 @@ using Microsoft.SPOT;
 
 namespace Pathfinder
 {
-    class TurnAngle
+    public class TurnAngle
     {
+        private double incidentAngle { get; set; }
+        private double attackAngle { get; set; }
+        private double changeAmount { get; set; }
+        private double modifiedAttack { get; set; }
+        private bool changeDirection { get; set; }
 
-        double incident_angle;
-        double attack_angle;
-        double change_amount;
-        double modified_attack;
-        double turn_angle;
 
-        bool change_direction;
-        bool turn_direction;
+        public double CurrentTurnAngle { get; set; }
+        public bool CurrentTurnDirection { get; set; }
+
+        public int CurrentServoAngle { get; set; }
+
 
 
 
         public void Set(double att, double inc)
         {
-            attack_angle = att;
-            incident_angle = inc;
+            attackAngle = att;
+            incidentAngle = inc;
             CalculateTurn();
         }
         private void CalculateTurn()
         {
 
             //getChange
-            if (incident_angle > 180)
+            if (incidentAngle > 180)
             {
-                change_amount = 360 - incident_angle;
-                change_direction = true;
+                changeAmount = 360 - incidentAngle;
+                changeDirection = true;
             }
             else
             {
-                change_amount = incident_angle;
-                change_direction = false;
+                changeAmount = incidentAngle;
+                changeDirection = false;
             }
-
 
             //getModifiedAttack
-            if (change_direction)
+            if (changeDirection)
             {
-                modified_attack = attack_angle + change_amount;
+                modifiedAttack = attackAngle + changeAmount;
             }
             else
             {
-                modified_attack = attack_angle - change_amount;
+                modifiedAttack = attackAngle - changeAmount;
             }
 
-            if (modified_attack > 360)
+            if (modifiedAttack > 360)
             {
-                modified_attack = modified_attack - 360;
+                modifiedAttack = modifiedAttack - 360;
             }
-
-
 
             //getTurnAngle
-            if (modified_attack > 180)
+            if (modifiedAttack > 180)
             {
-                turn_direction = false;
-                turn_angle = 360 - modified_attack;
+                CurrentTurnDirection = false;
+                CurrentTurnAngle = 360 - modifiedAttack;
             }
-            else if (modified_attack < 0)
+            else if (modifiedAttack < 0)
             {
-                turn_direction = false;
-                turn_angle = 0 - (modified_attack);
+                CurrentTurnDirection = false;
+                CurrentTurnAngle = 0 - (modifiedAttack);
             }
             else
             {
-                turn_direction = true;
-                turn_angle = modified_attack;
+                CurrentTurnDirection = true;
+                CurrentTurnAngle = modifiedAttack;
             }
 
 
-
-
+            CurrentServoAngle = GetServo();
         }
 
-
-
-
-        private void CalculateDistance()
-        {
-
-       
-
-        }
 
         public double GetTurnAngle()
         {
-            return (turn_angle);
+            return (CurrentTurnAngle);
         }
 
         public bool GetTurnDirection()
         {
-            return (turn_direction);
+            return (CurrentTurnDirection);
         }
+
+        public int GetServo()
+        {
+            int servoDirection = 90;
+
+            if (CurrentTurnDirection)
+            {
+                servoDirection = servoDirection - (int)CurrentTurnAngle;
+            }
+            else
+            {
+                servoDirection = servoDirection + (int)CurrentTurnAngle;
+            }
+
+            if (servoDirection > 180) servoDirection = 180;
+            if (servoDirection < 0) servoDirection = 0;
+
+            return (servoDirection);
+        }
+
+
+
     }
 }

@@ -63,7 +63,7 @@ namespace Pathfinder
         public void ReadBearings()
         {
             compass.Execute(bearingTrans, DELAY);
-            Thread.Sleep(100);  // Give the compass the requested 1ms delay before reading
+            Thread.Sleep(2);  // Give the compass the requested 1ms delay before reading, was 100ms
             compass.Execute(readTrans, DELAY);
  
             int heading = (int)(((ushort)inBuffer[0]) << 8 | (ushort)inBuffer[1]);

@@ -32,8 +32,10 @@
   <ItemGroup>
     <Compile Include="AttackAngle.cs" />
     <Compile Include="Compass.cs" />
+    <Compile Include="PathwayItem.cs" />
     <Compile Include="FEZ_Extensions_GPS.cs" />
     <Compile Include="FEZ_Shield_KeypadLCD.cs" />
+    <Compile Include="GPSFormatConverter.cs" />
     <Compile Include="IMU_9DOF.cs" />
     <Compile Include="MicroTimer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -43,6 +45,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Servo.cs" />
     <Compile Include="TurnAngle.cs" />
     <Compile Include="USBLog.cs" />
   </ItemGroup>

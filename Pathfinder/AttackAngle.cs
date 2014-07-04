@@ -32,12 +32,38 @@ namespace Pathfinder
         double xWarp = 1;
 
         // public methods
-        public void setOrigin(string origX, string origY)
+        //public void setOrigin(string origX, string origY)
+        //{
+        //    try
+        //    {
+        //        originX = -(double.Parse(origX));//negate because 8050.6108 is actually -8050.6108
+        //        originY = double.Parse(origY);
+
+
+        //        changeX = destinationX - originX;
+        //        //change in x might need to be modified by @ 22% to account for the warp in this region
+
+        //        changeX = changeX * xWarp;
+
+        //        changeY = destinationY - originY;
+
+        //        angle = ArcTangent(changeX, changeY);
+        //        distance = PythagoreanTheorem(changeX, changeY);
+
+        //    }
+        //    catch{}
+
+        //}
+
+
+
+
+        public void setOrigin(double origX, double origY)
         {
             try
             {
-                originX = -(double.Parse(origX));//negate because 8050.6108 is actually -8050.6108
-                originY = double.Parse(origY);
+                originX = origX;//negate because 8050.6108 is actually -8050.6108
+                originY = origY;
 
 
                 changeX = destinationX - originX;
@@ -55,17 +81,36 @@ namespace Pathfinder
 
         }
 
-        public void setDestination(string destX, string destY)
+
+
+
+        //public void setDestination(string destX, string destY)
+        //{
+        //    try
+        //    {
+        //        destinationX = -(double.Parse(destX));//negate because 8050.6108 is actually -8050.6108
+        //        destinationY = double.Parse(destY);
+
+        //    }
+        //    catch{}
+
+        //}
+
+
+        public void setDestination(double destX, double destY)
         {
             try
             {
-                destinationX = -(double.Parse(destX));//negate because 8050.6108 is actually -8050.6108
-                destinationY = double.Parse(destY);
+                destinationX = destX;
+                destinationY = destY;
 
             }
             catch{}
 
         }
+
+
+
 
         public double GetAngle()
         {
